@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QDebug>
 #include <QTimer>
+#include <QTreeWidgetItem>
 #include <QtCharts>
 #define STOP_ID "STOP"
 #define RUN_ID "RUN"
@@ -43,5 +44,7 @@ private:
     int chartindex;
     QValueAxis *axisX;
     QValueAxis *axisY;
+    QTreeWidgetItem *item1;
+
 };
 #endif // MAINWINDOW_H

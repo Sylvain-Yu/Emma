@@ -16,6 +16,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->btnRun->setEnabled(false);
     chartindex = 0;
 
+    // QtreeWidget
+    QStringList Speeditem;
+    Speeditem << "---Speed---";
+    item1 = new QTreeWidgetItem(ui->treeWidget,Speeditem);
+    item1->setIcon(0,QIcon(":/signal_red.png"));
+    item1->setText(1,"aaaa");
+    ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
+
     // QTimer setting
     paintInterv = new QTimer;
     paintInterv->stop();
@@ -58,6 +66,8 @@ void MainWindow::paintInter_timeout()
        ui->speedLcd->display(speed_cmd);
        ui->spinSpeed->setValue(speed_cmd);
        lineseries->append(chartindex,speed_cmd);
+       item1->setText(1,QString::number(speed_cmd,10,2));
+
        if (speed_cmd > 200 || chartindex >200)
        {
            axisX->setRange(0,chartindex);
