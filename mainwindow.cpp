@@ -135,3 +135,19 @@ void MainWindow::on_spinTorque_valueChanged(int arg1)
        ui->spinTorque->setValue(0);
    }
 }
+
+void MainWindow::on_btnLog_clicked(bool checked)
+{
+    if (checked)
+    {
+        QString savefile = QFileDialog::getSaveFileName(this,QStringLiteral("Save"),"","txt(*.txt);;csv(*.csv)");
+        qDebug()<< savefile;
+        QFile afile(savefile);
+        if (afile.open(QIODevice::WriteOnly|QIODevice::Text))
+        {
+            QTextStream aStream(&afile);
+            aStream << "helloworld,nice\nto,meet,you!";
+            afile.close();
+        }
+    }
+}

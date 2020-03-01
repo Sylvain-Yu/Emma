@@ -6,6 +6,7 @@
 #include <QTimer>
 #include <QTreeWidgetItem>
 #include <QtCharts>
+#include <QDateTime>
 #define STOP_ID "STOP"
 #define RUN_ID "RUN"
 
@@ -31,6 +32,8 @@ private slots:
     void on_spinSpeed_valueChanged(int arg1);
 
     void paintInter_timeout();
+
+    void on_btnLog_clicked(bool checked);
 
 private:
     Ui::MainWindow *ui;
