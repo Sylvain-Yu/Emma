@@ -7,6 +7,7 @@
 #include <QTreeWidgetItem>
 #include <QtCharts>
 #include <QDateTime>
+#include <QDateTimeAxis>
 #define STOP_ID "STOP"
 #define RUN_ID "RUN"
 
@@ -39,13 +40,13 @@ private:
     Ui::MainWindow *ui;
     int speed_cmd;
     int torque_cmd;
-    bool run_state;
-    bool lv_state;
+    bool run_state = false;
+    bool lv_state = false;
     QTimer *paintInterv;
     QLineSeries *lineseries;
     QChart * chart1;
-    int chartindex;
-    QValueAxis *axisX;
+    QDateTime now;
+    QDateTimeAxis *axisDatatimeX;
     QValueAxis *axisY;
     QTreeWidgetItem *item1;
 

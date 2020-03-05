@@ -10,18 +10,20 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     // ini set
-    lv_state = false;
-    run_state = false;
     speed_cmd = 0;
     ui->btnRun->setEnabled(false);
-    chartindex = 0;
 
     // QtreeWidget
     QStringList Speeditem;
-    Speeditem << "---Speed---";
+    Speeditem << "<Speed>";
+    Speeditem << "sss";
     item1 = new QTreeWidgetItem(ui->treeWidget,Speeditem);
     item1->setIcon(0,QIcon(":/signal_red.png"));
-    item1->setText(1,"aaaa");
+    item1->addChildren(
+//    item1->setText(1,"None");
+    auto item2 = new QTreeWidgetItem(item1,Speeditem);
+    item2->setText(1,"abc");
+
     ui->treeWidget->header()->setSectionResizeMode(QHeaderView::ResizeToContents);
 
     // QTimer setting
@@ -32,20 +34,24 @@ MainWindow::MainWindow(QWidget *parent)
 
     //QChart set
     chart1 = new QChart;
-    axisX = new QValueAxis;
+    axisDatatimeX = new QDateTimeAxis;
+    axisDatatimeX->setFormat("ss:zz");
+    now = QDateTime::currentDateTime();
+    axisDatatimeX->setRange(now.addSecs(-200),now.addSecs(200));
+    axisDatatimeX->setTickCount(5);
+
+
     axisY = new QValueAxis;
-    axisX->setRange(0,200);
-    axisY->setRange(0,200);
     lineseries = new QLineSeries;
     lineseries->setName("line1");
-    chart1->addAxis(axisX,Qt::AlignBottom);
+    chart1->addAxis(axisDatatimeX,Qt::AlignBottom);
     chart1->addAxis(axisY,Qt::AlignLeft);
     chart1->addSeries(lineseries);
     chart1->setTitle("test for it");
     ui->QChatView_1->setChart(chart1);
     ui->QChatView_1->setRubberBand(QChartView::RectangleRubberBand);
     ui->QChatView_1->setRenderHint(QPainter::Antialiasing);
-    lineseries->attachAxis(axisX);
+    lineseries->attachAxis(axisDatatimeX);
     lineseries->attachAxis(axisY);
 
     // signal -> slot
@@ -62,17 +68,12 @@ void MainWindow::paintInter_timeout()
    if (run_state&&lv_state)
    {
        speed_cmd++;
-       chartindex++;
+       now = QDateTime::currentDateTime();
        ui->speedLcd->display(speed_cmd);
        ui->spinSpeed->setValue(speed_cmd);
-       lineseries->append(chartindex,speed_cmd);
+       lineseries->append( now.toMSecsSinceEpoch(),speed_cmd);
        item1->setText(1,QString::number(speed_cmd,10,2));
-
-       if (speed_cmd > 200 || chartindex >200)
-       {
-           axisX->setRange(0,chartindex);
-           axisY->setRange(0,speed_cmd);
-       }
+       axisY->setRange(0,speed_cmd+10);
   }
 }
 
