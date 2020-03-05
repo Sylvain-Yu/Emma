@@ -19,7 +19,6 @@ MainWindow::MainWindow(QWidget *parent)
     Speeditem << "sss";
     item1 = new QTreeWidgetItem(ui->treeWidget,Speeditem);
     item1->setIcon(0,QIcon(":/signal_red.png"));
-    item1->addChildren(
 //    item1->setText(1,"None");
     auto item2 = new QTreeWidgetItem(item1,Speeditem);
     item2->setText(1,"abc");
@@ -147,7 +146,7 @@ void MainWindow::on_btnLog_clicked(bool checked)
         if (afile.open(QIODevice::WriteOnly|QIODevice::Text))
         {
             QTextStream aStream(&afile);
-            aStream << "helloworld,nice\nto,meet,you!";
+            aStream << "helloworld,nice\nto,meet,you! xx";
             afile.close();
         }
     }
